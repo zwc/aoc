@@ -1,0 +1,1 @@
+xmul(2,4)&don't()mul(3,7)do()mul(8,5)don't()mul(9,1)do()mul(1,6)
