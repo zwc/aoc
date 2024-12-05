@@ -10,27 +10,27 @@ export function validateRules(sequence: string[], rules: string[]) {
   });
 }
 
-export function reorderSequence(sequence: string[], rules: string[]) {
-  const graph = new Map(sequence.map((page) => [page, []]));
-  const inDegree = new Map(sequence.map((page) => [page, 0]));
+export function reorderSequence(sequence: string[], rules: [string, string][]): string[] {
+  const graph = new Map<string, string[]>(sequence.map((page) => [page, []]));
+  const inDegree = new Map<string, number>(sequence.map((page) => [page, 0]));
 
   rules.forEach(([a, b]) => {
     if (sequence.includes(a) && sequence.includes(b)) {
-      graph.get(a).push(b);
-      inDegree.set(b, inDegree.get(b) + 1);
+      graph.get(a)!.push(b); // Non-null assertion because `a` is guaranteed to be in `sequence`
+      inDegree.set(b, (inDegree.get(b) ?? 0) + 1);
     }
   });
 
-  const queue = [...inDegree.keys()].filter((page) => inDegree.get(page) === 0);
-  const sorted = [];
+  const queue: string[] = [...inDegree.keys()].filter((page) => inDegree.get(page) === 0);
+  const sorted: string[] = [];
 
   while (queue.length) {
-    const current = queue.shift();
+    const current = queue.shift()!;
     sorted.push(current);
-    for (const neighbor of graph.get(current)) {
-      if (
-        inDegree.set(neighbor, inDegree.get(neighbor) - 1).get(neighbor) === 0
-      ) {
+    for (const neighbor of graph.get(current)!) {
+      const updatedInDegree = (inDegree.get(neighbor) ?? 0) - 1;
+      inDegree.set(neighbor, updatedInDegree);
+      if (updatedInDegree === 0) {
         queue.push(neighbor);
       }
     }
