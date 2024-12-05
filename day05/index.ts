@@ -15,11 +15,8 @@ function validateRules(sequence) {
         positions[num] = index; // Only need the latest position
     });
 
-    // Check all rules
     return rules.every(([a, b]) => {
-        // Ignore the rule if either `a` or `b` is missing from the sequence
         if (!(a in positions) || !(b in positions)) return true;
-        // Validate that `a` appears before `b`
         return positions[a] < positions[b];
     });
 }
