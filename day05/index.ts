@@ -25,13 +25,8 @@ function validateRules(sequence) {
 }
 
 function reorderSequence(sequence) {
-    const graph = new Map();
-    const inDegree = new Map();
-
-    sequence.forEach(page => {
-        graph.set(page, []);
-        inDegree.set(page, 0);
-    });
+    const graph = new Map(sequence.map(page => [page, []]));
+    const inDegree = new Map(sequence.map(page => [page, 0]));
 
     rules.forEach(([a, b]) => {
         if (sequence.includes(a) && sequence.includes(b)) {
@@ -40,18 +35,14 @@ function reorderSequence(sequence) {
         }
     });
 
-    const queue = Array.from(inDegree.entries())
-        .filter(([_, degree]) => degree === 0)
-        .map(([page]) => page);
+    const queue = [...inDegree.keys()].filter(page => inDegree.get(page) === 0);
     const sorted = [];
 
     while (queue.length) {
         const current = queue.shift();
         sorted.push(current);
-
         for (const neighbor of graph.get(current)) {
-            inDegree.set(neighbor, inDegree.get(neighbor) - 1);
-            if (inDegree.get(neighbor) === 0) {
+            if (inDegree.set(neighbor, inDegree.get(neighbor) - 1).get(neighbor) === 0) {
                 queue.push(neighbor);
             }
         }
