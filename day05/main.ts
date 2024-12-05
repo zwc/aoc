@@ -1,5 +1,5 @@
-export function validateRules(sequence, rules) {
-  const positions = {};
+export function validateRules(sequence: string[], rules: string[]) {
+  const positions : { [key: string]: number } = {};
   sequence.forEach((num, index) => {
     positions[num] = index; // Only need the latest position
   });
@@ -10,7 +10,7 @@ export function validateRules(sequence, rules) {
   });
 }
 
-export function reorderSequence(sequence, rules) {
+export function reorderSequence(sequence: string[], rules: string[]) {
   const graph = new Map(sequence.map((page) => [page, []]));
   const inDegree = new Map(sequence.map((page) => [page, 0]));
 
@@ -39,7 +39,7 @@ export function reorderSequence(sequence, rules) {
   return sorted;
 }
 
-export function findMiddlePage(sequence) {
+export function findMiddlePage(sequence: string[]) {
   const middleIndex = Math.floor(sequence.length / 2);
   return sequence[middleIndex];
 }
