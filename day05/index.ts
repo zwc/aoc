@@ -9,30 +9,30 @@ const [rulesBlock, inputBlock] = fs
 
 const rules = rulesBlock
   .split('\n')
-  .map((rule) => rule.split('|').map(Number));
+  .map((rule: string) => rule.split('|').map(Number));
 
 const input = inputBlock
   .split('\n')
-  .map((line) => line.split(',').map(Number));
+  .map((line: string) => line.split(',').map(Number));
 
 let sumMiddleValid = 0;
 let sumMiddleReordered = 0;
 
 highland(input)
-  .filter(seq => validateRules(seq, rules))
-  .map((sequence) => findMiddlePage(sequence))
-  .reduce(0, (sum, middlePage) => sum + middlePage)
-  .each((total) => {
+  .filter((sequence: string[]) => validateRules(sequence, rules))
+  .map((sequence: string[]) => findMiddlePage(sequence))
+  .reduce(0, (sum: number, middlePage: number) => sum + middlePage)
+  .each((total: number) => {
     sumMiddleValid = total;
     console.log(`Sum of middle pages from valid sequences: ${sumMiddleValid}`);
   });
 
 highland(input)
-  .filter((sequence) => !validateRules(sequence, rules))
-  .map((sequence) => reorderSequence(sequence, rules))
-  .map((sequence) => findMiddlePage(sequence))
-  .reduce(0, (sum, middlePage) => sum + middlePage)
-  .each((total) => {
+  .filter((sequence: string[]) => !validateRules(sequence, rules))
+  .map((sequence: string[]) => reorderSequence(sequence, rules))
+  .map((sequence: string[]) => findMiddlePage(sequence))
+  .reduce(0, (sum: number, middlePage: number) => sum + middlePage)
+  .each((total: number) => {
     sumMiddleReordered = total;
     console.log(
       `Sum of middle pages from reordered sequences: ${sumMiddleReordered}`
