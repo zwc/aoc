@@ -3,13 +3,15 @@ const highland = require('highland');
 
 import { validateRules, findMiddlePage, reorderSequence } from './main.ts';
 
-const rules = fs
-  .readFileSync('rules.txt', 'utf-8')
+const [rulesBlock, inputBlock] = fs
+  .readFileSync('input.txt', 'utf-8')
+  .split('\n\n');
+
+const rules = rulesBlock
   .split('\n')
   .map((rule) => rule.split('|').map(Number));
 
-const input = fs
-  .readFileSync('input.txt', 'utf-8')
+const input = inputBlock
   .split('\n')
   .map((line) => line.split(',').map(Number));
 
