@@ -13,7 +13,6 @@ const input = fs
   .split('\n')
   .map((line) => line.split(',').map(Number));
 
-// Process input sequences
 let sumMiddleValid = 0;
 let sumMiddleReordered = 0;
 
