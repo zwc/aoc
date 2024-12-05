@@ -70,7 +70,6 @@ let sumMiddleValid = 0;
 let sumMiddleReordered = 0;
 
 highland(input)
-  .fork()
   .filter(validateRules)
   .map(sequence => findMiddlePage(sequence))
   .reduce(0, (sum, middlePage) => sum + middlePage)
