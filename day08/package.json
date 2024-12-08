@@ -1,0 +1,17 @@
+{
+  "name": "day08",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/highland": "^2.13.0",
+    "@types/ramda": "^0.30.2",
+    "highland": "^2.13.5",
+    "ramda": "^0.30.1"
+  }
+}
