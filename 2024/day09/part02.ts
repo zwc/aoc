@@ -1,38 +1,20 @@
 import { parseInput, buildDisk, calculateChecksum } from './part01';
 
-/**
- * Moves whole files from right to left:
- * - For each file in order of decreasing file ID:
- *   - Find a span of free space (contiguous nulls) to the left of the file that fits the entire file.
- *   - If found, move the file as a whole into that span.
- *   - If not found, leave it in place.
- */
 function compactWholeFiles(disk: (number | null)[]): (number | null)[] {
-  // Identify files and their positions
-  // A file is identified by an ID. We'll find all distinct file IDs and their blocks.
   const fileIDs = Array.from(new Set(disk.filter(x => x !== null))) as number[];
   fileIDs.sort((a, b) => b - a); // sort descending by file ID
 
-  // For each file from highest ID to lowest ID
   for (const fileID of fileIDs) {
-    // Get all positions of this file
     const filePositions = disk
       .map((val, idx) => ({ val, idx }))
       .filter(item => item.val === fileID)
       .map(item => item.idx);
 
-    if (filePositions.length === 0) continue; // no blocks found (shouldn't happen but just in case)
+    if (filePositions.length === 0) continue;
 
     const fileLength = filePositions.length;
     const fileStart = Math.min(...filePositions);
-    const fileEnd = Math.max(...filePositions);
 
-    // We need to find a contiguous free space that:
-    // 1. Is large enough to fit the entire file (fileLength).
-    // 2. Is located *entirely to the left* of fileStart.
-    // We'll scan from the left to right, up to fileStart-1, looking for a run of `null` of length >= fileLength.
-
-    // Collect runs of free spaces up to fileStart-1
     let bestStart = -1;
     let bestLength = 0;
     let currentStart = -1;
