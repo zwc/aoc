@@ -7,5 +7,9 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "highland": "^2.13.5",
+    "ramda": "^0.30.1"
   }
 }
