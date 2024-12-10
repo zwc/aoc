@@ -1,0 +1,14 @@
+{
+  "name": "day10",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "ramda": "^0.30.1"
+  }
+}
