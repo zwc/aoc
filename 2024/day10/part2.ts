@@ -17,37 +17,33 @@ const getNeighbors = (grid: number[][], x: number, y: number): [number, number][
     .filter(([nx, ny]) => nx >= 0 && ny >= 0 && nx < grid.length && ny < grid[0].length);
 };
 
-const findReachableNines = (grid: number[][], startX: number, startY: number): Set<string> => {
-  const stack: [number, number][] = [[startX, startY]];
-  const visited = new Set<string>();
-  const result = new Set<string>();
+const countDistinctTrails = (grid: number[][], startX: number, startY: number): number => {
+  const stack: [number, number, string][] = [[startX, startY, `${startX},${startY}`]];
+  const trails = new Set<string>();
 
   while (stack.length > 0) {
-    const [x, y] = stack.pop()!;
-    const key = `${x},${y}`;
-
-    if (visited.has(key)) continue;
-    visited.add(key);
+    const [x, y, trail] = stack.pop()!;
 
     const currentHeight = grid[x][y];
     if (currentHeight === 9) {
-      result.add(key);
+      trails.add(trail);
       continue;
     }
 
     const neighbors = getNeighbors(grid, x, y);
     for (const [nx, ny] of neighbors) {
       if (grid[nx][ny] === currentHeight + 1) {
-        stack.push([nx, ny]);
+        stack.push([nx, ny, `${trail}->${nx},${ny}`]);
       }
     }
   }
 
-  return result;
+  return trails.size;
 };
 
-const computeTrailheadScores = (grid: number[][]): number[] => {
+const computeTrailheadRatings = (grid: number[][]): number[] => {
   const trailheads: [number, number][] = [];
+
   grid.forEach((row, x) => {
     row.forEach((value, y) => {
       if (value === 0) {
@@ -55,14 +51,15 @@ const computeTrailheadScores = (grid: number[][]): number[] => {
       }
     });
   });
-  return trailheads.map(([x, y]) => findReachableNines(grid, x, y).size);
+
+  return trailheads.map(([x, y]) => countDistinctTrails(grid, x, y));
 };
 
-export const sumTrailheadScores = (input: string): number => {
+export const sumTrailheadRatings = (input: string): number => {
   const grid = parseInput(input);
-  const scores = computeTrailheadScores(grid);
-  return R.sum(scores);
+  const ratings = computeTrailheadRatings(grid);
+  return R.sum(ratings);
 };
 
 const input = readFileSync('./input.txt', 'utf8');
-console.log(sumTrailheadScores(input));
+console.log(sumTrailheadRatings(input));
