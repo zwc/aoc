@@ -31,7 +31,6 @@ const simulateBlinks = (stones: number[], blinks: number): number => {
   }
 
   for (let i = 0; i < blinks; i++) {
-    console.log(`Processing blink ${i + 1}/${blinks}...`);
     stoneCounts = transformAndCount(stoneCounts);
   }
 
