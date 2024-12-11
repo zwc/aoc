@@ -7,7 +7,7 @@ describe('Pluto Stones Simulation', () => {
     const blinks = 1;
 
     const count = await simulateBlinks(initialStones, blinks);
-    expect(count).toBe(3); // Total stones after 1 blink
+    expect(count).toBe(3);
   });
 
   it('should simulate 3 blinks correctly', async () => {
@@ -15,7 +15,7 @@ describe('Pluto Stones Simulation', () => {
     const blinks = 3;
 
     const count = await simulateBlinks(initialStones, blinks);
-    expect(count).toBe(5); // Total stones after 3 blinks
+    expect(count).toBe(5);
   });
 
   it('should simulate 6 blinks correctly', async () => {
@@ -23,7 +23,7 @@ describe('Pluto Stones Simulation', () => {
     const blinks = 6;
 
     const count = await simulateBlinks(initialStones, blinks);
-    expect(count).toBe(22); // Total stones after 6 blinks
+    expect(count).toBe(22);
   });
 
   it('should simulate 25 blinks correctly', async () => {
@@ -31,6 +31,6 @@ describe('Pluto Stones Simulation', () => {
     const blinks = 25;
 
     const count = await simulateBlinks(initialStones, blinks);
-    expect(count).toBe(55312); // Total stones after 25 blinks
+    expect(count).toBe(55312);
   });
 });
